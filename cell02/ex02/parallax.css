@@ -1,0 +1,54 @@
+/* General Page Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* Full-page section styling */
+.section {
+    height: 100vh; /* Full viewport height */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Top section with a background image */
+.section-bg {
+    background-image: url('https://wallpapers.com/images/hd/urban-street-aesthetic-anime-laptop-r0jbpncdeou499xi.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+/* Bottom section with a second background image */
+.section-bottom {
+    background-image: url('https://cdn.wallpapersafari.com/66/89/PsDtr0.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+/* Centered text styling */
+.centered-text h1, .centered-text h2 {
+    margin: 0;
+    font-size: 3em;
+}
+
+.centered-text p {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+/* Black block section */
+.black-block {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 100px 0;
+    font-size: 2em;
+}
