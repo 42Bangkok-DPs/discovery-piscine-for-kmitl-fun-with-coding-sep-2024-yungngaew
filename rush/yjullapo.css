@@ -68,7 +68,7 @@ nav::after {
 }
 
 
-#about, #skills, #contact {
+#about, #contact {
     background-color: #F5F1EA;
     padding: 100px;
     width: 100%;
@@ -103,7 +103,7 @@ nav::after {
     font-size: 1.5rem;
 }
 
-#showcase {
+#skill {
     background-color: #d9d3c8;
     padding: 100px;
     width: 100%;
@@ -115,11 +115,7 @@ nav::after {
     position: relative; 
 }
 
-.container-skill {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-}
+
 
 @media screen and (max-width: 360px) {
     .logo {
