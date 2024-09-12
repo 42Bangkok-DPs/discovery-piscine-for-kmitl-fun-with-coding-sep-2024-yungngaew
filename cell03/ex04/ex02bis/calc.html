@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="center">
+        <form id="calculatorForm">
+            <input type="text" id="leftValue" name="leftValue" placeholder="Enter first number">
+            <select id="operators" name="operators">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+                <option value="%">%</option>
+            </select>
+            <input type="text" id="rightValue" name="rightValue" placeholder="Enter second number">
+            <input type="submit" value="Try me!">
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#calculatorForm').on('submit', function(event) {
+                event.preventDefault();
+                cal();
+            });
+
+            function cal() {
+                let leftOp = $.trim($('#leftValue').val());
+                let rightOp = $.trim($('#rightValue').val());
+                let op = $('#operators').val();
+
+                if (isNaN(leftOp) || isNaN(rightOp) || leftOp === '' || rightOp === '') {
+                    alert("Error :(");
+                    return;
+                }
+
+                leftOp = parseFloat(leftOp);
+                rightOp = parseFloat(rightOp);
+
+                let result;
+
+                if ((leftOp >= 0) && (rightOp >= 0)) {
+                    switch (op) {
+                        case "+":
+                            result = leftOp + rightOp;
+                            break;
+                        case "-":
+                            result = leftOp - rightOp;
+                            break;
+                        case "*":
+                            result = leftOp * rightOp;
+                            break;
+                        case "/":
+                            if (rightOp === 0) {
+                                result = "It’s over 9000!";
+                            } else {
+                                result = leftOp / rightOp;
+                            }
+                            break;
+                        case "%":
+                            if (rightOp === 0) {
+                                result = "It’s over 9000!";
+                            } else {
+                                result = leftOp % rightOp;
+                            }
+                            break;
+                    }
+                    alert(result);
+                } else {
+                    alert("Error :(");
+                }
+            }
+
+            setInterval(function() {
+                alert("Please, use me...");
+            }, 30000);
+        });
+    </script>
+</body>
+
+</html>
