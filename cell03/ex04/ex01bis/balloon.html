@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Balloon</title>
+<style>
+body {
+	display: flex;
+	height: 100vh;
+	flex-direction: column-reverse;
+	justify-content: center;
+	background-color: rgb(238, 237, 235);
+}
+.balloon { 
+	width: 200px;
+	height: 200px;
+	margin: 0 auto 10px; 
+	border-radius:50%;
+	color: black; 
+} 
+.red {
+	background-color: red;
+}
+.green {
+	background-color: green;
+}
+.blue {
+	background-color: blue;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function changeColor($element) {
+    if ($element.hasClass("red")) {
+        $element.removeClass("red").addClass("green");
+    } else if ($element.hasClass("green")) {
+        $element.removeClass("green").addClass("blue");
+    } else {
+        $element.removeClass("blue").addClass("red");
+    }
+}
+
+function handleClick($element) {
+    changeColor($element);
+    if ($element.width() < 420) {
+        let newSize = $element.width() + 10;
+        $element.css({
+            width: Math.min(newSize, 420) + "px",
+            height: Math.min(newSize, 420) + "px"
+        });
+    } else {
+        $element.css({
+            width: "200px",
+            height: "200px"
+        });
+    }
+}
+
+function onHover($element) {
+    invertColor($element);
+    $element.css({
+        width: Math.max(200, $element.width() - 5) + "px",
+        height: Math.max(200, $element.height() - 5) + "px"
+    });
+}
+
+function invertColor($element) {
+    if ($element.hasClass("green")) {
+        $element.removeClass("green").addClass("blue");
+    } else if ($element.hasClass("blue")) {
+        $element.removeClass("blue").addClass("red");
+    } else {
+        $element.removeClass("red").addClass("green");
+    }
+}
+
+$(document).ready(function() {
+    $('.balloon').on('click', function() {
+        handleClick($(this));
+    }).on('mouseleave', function() {
+        onHover($(this));
+    });
+});
+</script>	
+</head>
+<body>
+	<div class="balloon red"></div> 
+</body>
+</html>
