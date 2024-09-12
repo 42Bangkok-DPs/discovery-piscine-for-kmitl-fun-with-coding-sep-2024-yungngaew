@@ -1,90 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Calculator</title>
+    <title>Calculator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        * {
             margin: 0;
         }
-        .calculator {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        input, select {
-            margin: 5px 0;
-            padding: 5px;
+
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
     </style>
 </head>
+
 <body>
-    <div class="calculator">
-        <input id="left" placeholder="first number">
-        <select id="operator">
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">*</option>
-            <option value="/">/</option>
-            <option value="%">%</option>
-        </select>
-        <input id="right" placeholder="second number">
-        <input type="button" value="Try me!" onclick="calculate()">
+    <div class="center">
+        <form onsubmit="event.preventDefault(); cal();">
+            <input type="text" id="leftValue" name="leftValue" placeholder="Enter first number">
+            <select id="operators" name="operators">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+                <option value="%">%</option>
+            </select>
+            <input type="text" id="rightValue" name="rightValue" placeholder="Enter second number">
+            <input type="submit" value="Try me!">
+        </form>
     </div>
-    <script>
-        function calculate() {
-            const left = parseInt(document.getElementById('left').value);
-            const right = parseInt(document.getElementById('right').value);
-            const operator = document.getElementById('operator').value;
+</body>
 
-            if (isNaN(left) || isNaN(right) || left < 0 || right < 0) {
-                alert('Error :(');
-                console.log('Error :(');
-                return;
-            }
+<script>
+    const cal = () => {
+        let leftOp = document.getElementById("leftValue").value.trim();
+        let rightOp = document.getElementById("rightValue").value.trim();
+        let op = document.getElementById("operators").value;
 
-            let result;
-            switch (operator) {
-                case '+':
-                    result = left + right;
-                    break;
-                case '-':
-                    result = left - right;
-                    break;
-                case '*':
-                    result = left * right;
-                    break;
-                case '/':
-                    if (right === 0) {
-                        alert("It's over 9000!");
-                        console.log("It's over 9000!");
-                        return;
-                    }
-                    result = left / right;
-                    break;
-                case '%':
-                    if (right === 0) {
-                        alert("It's over 9000!");
-                        console.log("It's over 9000!");
-                        return;
-                    }
-                    result = left % right;
-                    break;
-            }
-
-            alert(`Result: ${result}`);
-            console.log(`Result: ${result}`);
+        // Validate if the input is a number or contains only digits and .
+        if (isNaN(leftOp) || isNaN(rightOp) || leftOp === '' || rightOp === '') {
+            alert("Error :(");
+            return;
         }
 
-        setInterval(() => {
-            alert('Please, use me...');
-        }, 30000);
-    </script>
-</body>
+        leftOp = parseFloat(leftOp);
+        rightOp = parseFloat(rightOp);
+
+        let result;
+
+        if ((leftOp >= 0) && (rightOp >= 0)) {
+            switch (op) {
+                case "+":
+                    result = leftOp + rightOp;
+                    break;
+                case "-":
+                    result = leftOp - rightOp;
+                    break;
+                case "*":
+                    result = leftOp * rightOp;
+                    break;
+                case "/":
+                    if (rightOp === 0) {
+                        result = leftOp / rightOp;
+                    } else {
+                        result = "It’s over 9000!";
+                    }
+                    break;
+                case "%":
+                    if (rightOp === 0) {
+                        result = leftOp % rightOp;
+                    } else {
+                        result = "It’s over 9000!";
+                    }
+                    break;
+            }
+            alert(result);
+        } else {
+            alert("Error :(");
+        }
+    }
+
+    // Set an alert every 30 seconds
+    setInterval(function () {
+        alert("Please, use me...");
+    }, 30000);
+</script>
+
 </html>
