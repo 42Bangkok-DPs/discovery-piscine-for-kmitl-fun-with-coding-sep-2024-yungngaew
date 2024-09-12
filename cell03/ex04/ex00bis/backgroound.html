@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>background</title>
+    <link rel="stylesheet" href="backgroound.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <button id="changeColorBtn">Click me!</button>
+
+    <script>
+        function changeBackground() {
+            var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+            $('body').css('background-color', '#' + randomColor);
+        }
+
+        $(document).ready(function() {
+            $('#changeColorBtn').click(function() {
+                changeBackground();
+            });
+        });
+    </script>
+</body>
+</html>
