@@ -31,58 +31,48 @@ body {
 }
 </style>
 <script>
-function changeColor(change)
-{
-    if(change.classList.contains("red"))
-    {
+function changeColor(change) {
+    if(change.classList.contains("red")) {
         change.classList.remove("red");
 		change.classList.add("green");
-    }else if(change.classList.contains("green"))
-	{
+    } else if(change.classList.contains("green")) {
         change.classList.remove("green");
 		change.classList.add("blue");
-    }
-	else {
+    } else {
 		change.classList.remove("blue");
 		change.classList.add("red");
 	}
-    return false;
 }
-function handleClick(change)
-{
+
+function handleClick(change) {
 	changeColor(change);
-	if (change.offsetWidth < "420")
-	{
-		change.style.width = (change.offsetWidth + 10) + "px";
-		change.style.height = (change.offsetHeight + 10) + "px";
-	}
-	else {
+	if (change.offsetWidth < 420) {
+		let newSize = change.offsetWidth + 10;
+		change.style.width = Math.min(newSize, 420) + "px"; 
+		change.style.height = Math.min(newSize, 420) + "px";
+	} else {
 		change.style.width = "200px";
 		change.style.height = "200px";
 	}
 }
-function onHover(change)
-{
+
+function onHover(change) {
 	invertColor(change);
-	change.style.width = Math.max(200,  change.offsetWidth - 5) + "px";
-	change.style.height = Math.max(200,  change.offsetHeight - 5) + "px";
+	change.style.width = Math.max(200, change.offsetWidth - 5) + "px";
+	change.style.height = Math.max(200, change.offsetHeight - 5) + "px";
 }
-function invertColor(change)
-{
-    if(change.classList.contains("green"))
-    {
+
+function invertColor(change) {
+    if(change.classList.contains("green")) {
         change.classList.remove("green");
 		change.classList.add("blue");
-    }else if(change.classList.contains("blue"))
-	{
+    } else if(change.classList.contains("blue")) {
         change.classList.remove("blue");
 		change.classList.add("red");
-    }
-	else {
+    } else {
 		change.classList.remove("red");
 		change.classList.add("green");
 	}
-    return false;
 }
 </script>	
 </head>
