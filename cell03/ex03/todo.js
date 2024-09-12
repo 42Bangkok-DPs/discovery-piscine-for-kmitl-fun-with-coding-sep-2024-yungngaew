@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadTodos();
 
-    // Event listener for adding new TO DO
     newBtn.addEventListener('click', function() {
         const todo = prompt('Enter a new TO DO:');
         if (todo && todo.trim() !== '') {
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Function to add a TO DO item
     function addTodo(todo) {
         const div = document.createElement('div');
         div.className = 'todo-item';
@@ -22,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         todoText.textContent = todo;
         div.appendChild(todoText);
 
-        // Event listener to remove TO DO when clicking on the list item
         div.addEventListener('click', function() {
             if (confirm(`Do you want to remove this TO DO: "${todo}"?`)) {
                 ftList.removeChild(div);
@@ -30,22 +27,30 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Insert the new item at the top of the list
         ftList.insertBefore(div, ftList.firstChild);
     }
 
-    // Function to save TO DOs to cookies
     function saveTodos() {
-        const todos = Array.from(ftList.children).map(div => div.firstChild.textContent);
-        document.cookie = `todos=${JSON.stringify(todos)}; expires=${new Date(Date.now() + 86400000).toUTCString()}`;
+        const todos = Array.from(ftList.children).map((div, index) => div.firstChild.textContent);
+        
+        document.cookie.split('; ').forEach(cookie => {
+            if (cookie.startsWith('todo_')) {
+                document.cookie = cookie.split('=')[0] + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+            }
+        });
+
+        todos.forEach((todo, index) => {
+            document.cookie = `todo_${index}=${encodeURIComponent(todo)}; expires=${new Date(Date.now() + 86400000).toUTCString()}`;
+        });
     }
 
-    // Function to load TO DOs from cookies
     function loadTodos() {
-        const cookie = document.cookie.split('; ').find(row => row.startsWith('todos='));
-        if (cookie) {
-            const todos = JSON.parse(cookie.split('=')[1]);
-            todos.forEach(addTodo);
-        }
+        const cookies = document.cookie.split('; ');
+        cookies.forEach(cookie => {
+            if (cookie.startsWith('todo_')) {
+                const todo = decodeURIComponent(cookie.split('=')[1]);
+                addTodo(todo);
+            }
+        });
     }
 });
