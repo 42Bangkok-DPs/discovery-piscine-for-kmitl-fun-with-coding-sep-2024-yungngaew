@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
-</head>
-<body>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="todo.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,7 +34,10 @@
             box-shadow: 0 0 5px rgba(0,0,0,0.2);
             cursor: pointer;
         }
-        #newBtn {
+        span{
+            margin: 10px;
+        }
+        #New {
             margin-bottom: 10px;
             padding: 10px 20px;
             background-color: #007bff;
@@ -48,8 +50,14 @@
     </style>
 </head>
 <body>
-    <h1>TO DO</h1>
-    <button id="newBtn">New</button>
-    <div id="ft_list"></div>
+  <div class="task">
+    <h1>TODO LIST</h1>
+    <span>
+      <button id="New">New</button>
+    </span>
+    <div id="ft_list">
+    </div>
+  </div>
+  <script src="todo.js"></script>
 </body>
 </html>
