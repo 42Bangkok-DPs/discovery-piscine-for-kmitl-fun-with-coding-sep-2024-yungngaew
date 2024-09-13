@@ -1,100 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Balloon</title>
-<style>
-body {
-	display: flex;
-	height: 100vh;
-	flex-direction: column-reverse;
-	justify-content: center;
-	background-color: rgb(238, 237, 235);
-}
-.balloon { 
-	width: 200px;
-	height: 200px;
-	margin: 0 auto 10px; 
-	border-radius:50%;
-	color: black; 
-} 
-.red {
-	background-color: red;
-}
-.green {
-	background-color: green;
-}
-.blue {
-	background-color: blue;
-}
-</style>
+    <title>Balloon</title>
+    <style>
+        #balloon {
+            background-color: red;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        body {
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="balloon"></div>
+</body>
+
+</html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+    var my_color = ["red", "green", "blue"];
+    var colors_state = 0;
+    var balloon_size = 200;
+    var max_size = 415; // The maximum size of the balloon
 
-function changeColor($element) {
-    if ($element.hasClass("red")) {
-        $element.removeClass("red").addClass("green");
-    } else if ($element.hasClass("green")) {
-        $element.removeClass("green").addClass("blue");
-    } else {
-        $element.removeClass("blue").addClass("red");
-    }
-}
+    function blow_up() {
+        if (balloon_size < max_size) {
+            balloon_size += 10;
+            if (colors_state < 2) {
+                colors_state++;
+            } else {
+                colors_state = 0;
+            }
+        } else {
+            balloon_size = 200;
+            colors_state = 0;
+        }
 
-function handleClick($element) {
-    changeColor($element);
-    if ($element.width() < 420) {
-        let newSize = $element.width() + 10;
-        $element.css({
-            width: Math.min(newSize, 420) + "px",
-            height: Math.min(newSize, 420) + "px"
-        });
-    } else {
-        $element.css({
-            width: "200px",
-            height: "200px"
+        $("#balloon").css({
+            "background-color": my_color[colors_state],
+            "width": balloon_size + "px",
+            "height": balloon_size + "px"
         });
     }
-}
 
-function onHover($element) {
-    invertColor($element);
-    $element.css({
-        width: Math.max(200, $element.width() - 5) + "px",
-        height: Math.max(200, $element.height() - 5) + "px"
-    });
-}
+    function deflate() {
+        if (balloon_size > 200) {
+            balloon_size -= 5;
+            if (colors_state > 0) {
+                colors_state--;
+            } else {
+                colors_state = 2;
+            }
+        }
 
-function invertColor($element) {
-    if ($element.hasClass("green")) {
-        $element.removeClass("green").addClass("blue");
-    } else if ($element.hasClass("blue")) {
-        $element.removeClass("blue").addClass("red");
-    } else {
-        $element.removeClass("red").addClass("green");
+        $("#balloon").css({
+            "background-color": my_color[colors_state],
+            "width": balloon_size + "px",
+            "height": balloon_size + "px"
+        });
     }
-}
 
-$(document).ready(function() {
-    $('.balloon').on('click', function() {
-        handleClick($(this));
-    }).on('mouseleave', function() {
-        onHover($(this));
+    $(document).ready(function() {
+        $("#balloon").click(blow_up);
+        $("#balloon").mouseout(deflate);
     });
-});
-</script>	
-</head>
-<body>
-	<div class="balloon red"></div> 
-</body>
-</html>
+</script>
