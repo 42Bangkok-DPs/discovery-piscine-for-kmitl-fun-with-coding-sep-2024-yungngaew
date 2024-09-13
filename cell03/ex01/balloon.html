@@ -1,68 +1,82 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Balloon</title>
-    <style>
-        #balloon {
-            background-color: red;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
+<html lang="en">
 
-        body {
-            margin: 0px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .balloon {
+            height: 200px;
+            width: 200px;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
 
 <body>
-    <div id="balloon" onclick="blow_up()"></div>
+    <div class="balloon" id="balloon"></div>
 </body>
 
-</html>
 <script>
-    var my_color = ["red", "green", "blue"];
-    var colors_state = 0;
-    var balloon = document.getElementById('balloon');
-    var balloon_size = 200;
-    var max_size = 415; // The maximum size of the balloon
+    $(document).ready(function() {
+        const minSize = 200;
+        const maxSize = 420;
+        let pSize = 200;
+        const color = ["red", "green", "blue"];
+        let i = 0;
 
-    function blow_up() {
-        if (balloon_size < max_size) {
-            balloon_size += 10;
-            if (colors_state < 2) {
-                colors_state++;
-            } else {
-                colors_state = 0;
+        function biggerSize() {
+            pSize += 10;
+            i++;
+            if (pSize > maxSize) {
+                pSize = minSize;
             }
-        } else {
-            balloon_size = 200;
-            colors_state = 0;
-        }
-        balloon.style.backgroundColor = my_color[colors_state];
-        balloon.style.width = balloon_size + "px";
-        balloon.style.height = balloon_size + "px";
-    }
+            updateSize(pSize);
 
-    function deflate() {
-        if (balloon_size > 200) {
-            balloon_size -= 5;
-            if (colors_state > 0) {
-                colors_state--;
-            } else {
-                colors_state = 2;
+            if (i > 2) {
+                i = 0;
             }
-        }
-        balloon.style.backgroundColor = my_color[colors_state];
-        balloon.style.width = balloon_size + "px";
-        balloon.style.height = balloon_size + "px";
-    }
+            updateColor(i);
 
-    balloon.addEventListener('mouseout', deflate);
+            console.log(pSize);
+            console.log(color[i]);
+        }
+
+        function lowerSize() {
+            i--;
+            pSize -= 5;
+
+            if (i < 0) {
+                i = 2;
+            }
+            if (pSize < minSize) {
+                pSize = minSize;
+            }
+            updateSize(pSize);
+            updateColor(i);
+        }
+
+        function updateColor(i) {
+            $("#balloon").css("background-color", color[i]);
+        }
+
+        function updateSize(s) {
+            $("#balloon").css({
+                "height": s + "px",
+                "width": s + "px"
+            });
+        }
+
+        $("#balloon").click(biggerSize);
+        $("#balloon").mouseleave(lowerSize);
+    });
 </script>
+
+</html>
