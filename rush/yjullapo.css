@@ -128,8 +128,8 @@ nav::after {
 
 .skill-container{
     display: flex;
-    flex-direction: column; /* จัดเรียงเป็นแนวตั้ง */
-    align-items: center; /* จัดกึ่งกลางเนื้อหา */
+    flex-direction: column; 
+    align-items: center;
 }
 .skill-images {
     display: flex;
@@ -145,7 +145,7 @@ nav::after {
 }
 
 .skill-container h2 {
-    margin-bottom: 50px ; /* กำหนดระยะห่างระหว่างคำว่า SKILL กับรูปภาพ */
+    margin-bottom: 50px ; 
     font-size: 3rem;
 }
 
