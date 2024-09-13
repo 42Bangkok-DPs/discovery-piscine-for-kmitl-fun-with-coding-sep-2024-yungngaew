@@ -6,23 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
         }
 
-        .center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+        .calculator {
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input,
+        select {
+            margin: 5px 0;
+            padding: 5px;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 1.2em;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div class="center">
-        <form id="calculatorForm">
-            <input type="text" id="leftValue" name="leftValue" placeholder="Enter first number">
+    <div class="calculator">
+        <form id="calculatorform">
+            <input type="text" id="left" name="left" placeholder="first number">
             <select id="operators" name="operators">
                 <option value="+">+</option>
                 <option value="-">-</option>
@@ -30,72 +46,72 @@
                 <option value="/">/</option>
                 <option value="%">%</option>
             </select>
-            <input type="text" id="rightValue" name="rightValue" placeholder="Enter second number">
+            <input type="text" id="right" name="right" placeholder="second number">
             <input type="submit" value="Try me!">
         </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        const cal = () => {
-            let leftOp = $.trim($("#leftValue").val());
-            let rightOp = $.trim($("#rightValue").val());
-            let op = $("#operators").val();
+        $(document).ready(function () {
+            $('#calculatorform').submit(function (event) {
+                event.preventDefault();
+                cal();
+            });
 
-            if (isNaN(leftOp) || isNaN(rightOp) || leftOp === '' || rightOp === '') {
-                alert("Error :(");
-                return;
-            }
+            function cal() {
+                let left = $('#left').val().trim();
+                let right = $('#right').val().trim();
+                let op = $('#operators').val();
 
-            leftOp = parseFloat(leftOp);
-            rightOp = parseFloat(rightOp);
+                leftOp = parseFloat(left);
+                rightOp = parseFloat(right);
 
-            let result;
 
-            if ((leftOp >= 0) && (rightOp >= 0)) {
-                switch (op) {
-                    case "+":
-                        result = leftOp + rightOp;
-                        break;
-                    case "-":
-                        result = leftOp - rightOp;
-                        break;
-                    case "*":
-                        result = leftOp * rightOp;
-                        break;
-                    case "/":
-                        if (rightOp === 0) {
-                            alert("Error :(");
-                            return;
-                        } else {
-                            result = leftOp / rightOp;
-                        }
-                        break;
-                    case "%":
-                        if (rightOp === 0) {
-                            alert("Error :(");
-                            return;
-                        } else {
-                            result = leftOp % rightOp;
-                        }
-                        break;
+                if ( !Number.isInteger(leftOp) || !Number.isInteger(rightOp) || isNaN(leftOp) || isNaN(rightOp) || leftOp === '' || rightOp === '') {
+                    alert("Error :(");
+                    return;
                 }
 
-                if (Number.isInteger(result)) {
+                if (left !== leftOp.toString() || right !== rightOp.toString()) {
+                    alert("Error :(");
+                    return;
+                }
+
+                let result;
+
+                if (left >= 0 && right >= 0) {
+                    switch (op) {
+                        case "+":
+                            result = leftOp + rightOp;
+                            break;
+                        case "-":
+                            result = leftOp - rightOp;
+                            break;
+                        case "*":
+                            result = leftOp * rightOp;
+                            break;
+                        case "/":
+                            if (rightOp === 0) {
+                                result = "It’s over 9000!";
+                            } else {
+                                result = leftOp / rightOp;
+                            }
+                            break;
+                        case "%":
+                            if (rightOp === 0) {
+                                result = "It’s over 9000!";
+                            } else {
+                                result = leftOp % rightOp;
+                            }
+                            break;
+                        default:
+                            result = "Error :(";
+                    }
                     alert(result);
                 } else {
                     alert("Error :(");
                 }
-            } else {
-                alert("Error :(");
             }
-        }
-
-        $(document).ready(function () {
-            $("#calculatorForm").submit(function (event) {
-                event.preventDefault();
-                cal();
-            });
 
             setInterval(function () {
                 alert("Please, use me...");
