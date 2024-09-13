@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function addTodo(todo) {
+    function addTodo(todo, index = null) {
         const div = document.createElement('div');
         div.className = 'todo-item';
         
@@ -27,11 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        ftList.insertBefore(div, ftList.firstChild);
+        if (index !== null) {
+            ftList.insertBefore(div, ftList.children[index]);
+        } else {
+            ftList.insertBefore(div, ftList.firstChild);
+        }
     }
 
     function saveTodos() {
-        const todos = Array.from(ftList.children).map((div, index) => div.firstChild.textContent);
+        const todos = Array.from(ftList.children).map((div, index) => ({
+            text: div.firstChild.textContent,
+            index: index
+        }));
         
         document.cookie.split('; ').forEach(cookie => {
             if (cookie.startsWith('todo_')) {
@@ -40,17 +47,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         todos.forEach((todo, index) => {
-            document.cookie = `todo_${index}=${encodeURIComponent(todo)}; expires=${new Date(Date.now() + 86400000).toUTCString()}`;
+            document.cookie = `todo_${index}=${encodeURIComponent(todo.text)}; expires=${new Date(Date.now() + 86400000).toUTCString()}`;
         });
     }
 
     function loadTodos() {
         const cookies = document.cookie.split('; ');
+        const todos = [];
+
         cookies.forEach(cookie => {
             if (cookie.startsWith('todo_')) {
                 const todo = decodeURIComponent(cookie.split('=')[1]);
-                addTodo(todo);
+                todos.push(todo);
             }
+        });
+
+        todos.forEach((todo, index) => {
+            addTodo(todo, index);
         });
     }
 });
