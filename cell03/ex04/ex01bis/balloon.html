@@ -57,8 +57,9 @@
     function deflate() {
         if (balloon_size > 200) {
             balloon_size -= 5;
+            colors_state--;
             if (colors_state > 0) {
-                colors_state--;
+
             } else {
                 colors_state = 2;
             }
