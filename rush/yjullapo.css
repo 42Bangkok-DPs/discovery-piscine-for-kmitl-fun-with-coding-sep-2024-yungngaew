@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #584d46;
+    height: 100vh; 
+
+}
+
+ .container {
+    width: 95%;
+    margin: 0 auto;
+  }
+  
+nav {
+    background-color: #F5F1EA ;
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+    width: 100%;
+}
+
+.nav-con {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu li {
+    list-style: none;
+    margin-left: 1rem;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.menu li:hover {
+    background-color: #E0D9CE;
+}
+
+a {
+    color: #584d46 ;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav::after {
+    content: "";
+    display: block;
+    width: 100vw;
+    height: 1px;
+    background-color: #4F463E;
+    position: absolute;
+    left: -10px;
+}
+
+
+#about {
+    background-color: #F5F1EA;
+    padding: 100px;
+    width: 100%;
+    min-height: 800px; 
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+}
+
+.circleimg {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 250px;
+}
+
+.aboutinfo h2 {
+    margin: 50px 0;
+    font-size: 3rem;
+}
+
+.aboutinfo h4 {
+    margin: 20px 0;
+    font-size: 2rem;
+}
+
+.aboutinfo p {
+    margin: 10px 0;
+    font-size: 1.5rem;
+}
+
+#skill {
+    background-color: #d9d3c8;
+    padding: 100px;
+    width: 100%;
+    min-height: 800px; 
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+}
+
+#skill img{
+    height: 200px;
+    width: 200px;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+}
+
+.skill-container{
+    display: flex;
+    flex-direction: column; /* จัดเรียงเป็นแนวตั้ง */
+    align-items: center; /* จัดกึ่งกลางเนื้อหา */
+}
+.skill-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.skill-images img {
+    height: 200px;
+    width: 200px;
+    margin: 20px;
+    object-fit: cover;
+}
+
+.skill-container h2 {
+    margin-bottom: 50px ; /* กำหนดระยะห่างระหว่างคำว่า SKILL กับรูปภาพ */
+    font-size: 3rem;
+}
+
+#contact {
+    background-color: #F5F1EA;
+    padding: 100px;
+    width: 100%;
+    min-height: 800px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+}
+
+.reach-container  {
+    height: 500px;
+    width: 500px;
+    align-items: center;
+    text-align: center;
+}
+
+.email-container {
+    height: 500px;
+    width: 500px;
+    align-items: center;
+    text-align: center;
+}
+
+.contactinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 100px;
+}
+
+.social {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center; 
+    gap: 100px; 
+    height: 200px; 
+    position: absolute;
+    bottom: 30%; 
+    width: 100%; 
+    background-color: #F5F1EA;
+}
+
+.social img {
+    max-width: 100px; 
+    height: auto; 
+}
+
+
+@media screen and (max-width: 360px) {
+    .logo {
+        margin-bottom: 1.5rem;
+    }
+
+    .nav-con {
+        padding: 2rem 0;
+        flex-direction: column;
+        height: auto;
+        width: auto;
+    }
+
+    .menu {
+        width: 100%;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .menu li {
+        padding: 1rem 0;
+        margin-left: 0;
+        transition: 0.5s;
+    }
+
+    .menu li:hover {
+        background-color: #E0D9CE;
+    }
+
+}
