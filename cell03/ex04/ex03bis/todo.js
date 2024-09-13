@@ -1,57 +1,50 @@
+let numbering = 0;
 
-        $(document).ready(function() {
-            const $ftList = $('#ft_list');
-            const $newBtn = $('#newBtn');
+$('#New').click(function() {
+  const name = prompt("Please enter your list:", "");
+  if (name == null || name.trim() === '') {
+    alert("Invalid input");
+    return;
+  }
+  numbering++;
+  setCookie(numbering.toString(), name, 365);  
+  appending(name);
+});
 
-            loadTodos();
+function appending(name) {
+  const todo_div = $('<div></div>')
+      .text(name)
+      .attr('id', numbering)
+      .attr('class', "todo-item");
+  $('#ft_list').prepend(todo_div);
+}
 
-            $newBtn.on('click', function() {
-                const todo = prompt('Enter a new TO DO:');
-                if (todo && todo.trim() !== '') {
-                    addTodo(todo);
-                    saveTodos();
-                }
-            });
+function setCookie(cname, cvalue, exdays) {
+  const expDate = new Date();
+  expDate.setTime(expDate.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  document.cookie = `${cname}=${encodeURIComponent(cvalue)}; expires=${expDate.toUTCString()}; path=/`;
+}
 
-            function addTodo(todo) {
-                const $div = $('<div></div>').addClass('todo-item');
-                const $todoText = $('<span></span>').text(todo);
+function deleteCookie(name) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+}
 
-                $div.append($todoText);
+$('#ft_list').on('click', '.todo-item', function() {
+  if (confirm("Do you want to delete?")) {
+    deleteCookie(this.id);
+    $(this).remove();
+    numbering--;
+  }
+});
 
-                $div.on('click', function() {
-                    if (confirm(`Do you want to remove this TO DO: "${todo}"?`)) {
-                        $div.remove();
-                        saveTodos();
-                    }
-                });
-
-                $ftList.prepend($div);
-            }
-
-            function saveTodos() {
-                const todos = $ftList.children().map(function() {
-                    return $(this).text();
-                }).get();
-
-                document.cookie.split('; ').forEach(cookie => {
-                    if (cookie.startsWith('todo_')) {
-                        document.cookie = cookie.split('=')[0] + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-                    }
-                });
-
-                todos.forEach((todo, index) => {
-                    document.cookie = `todo_${index}=${encodeURIComponent(todo)}; expires=${new Date(Date.now() + 86400000).toUTCString()}`;
-                });
-            }
-
-            function loadTodos() {
-                const cookies = document.cookie.split('; ');
-                cookies.forEach(cookie => {
-                    if (cookie.startsWith('todo_')) {
-                        const todo = decodeURIComponent(cookie.split('=')[1]);
-                        addTodo(todo);
-                    }
-                });
-            }
-        });
+$(window).on("load", function() {
+  numbering = 0;
+  const cookies = document.cookie.split('; ').filter(row => row.includes('='));
+  cookies.forEach(cookie => {
+    const [key, value] = cookie.split('=');
+    if (key && value) {
+      numbering++;
+      appending(decodeURIComponent(value));
+    }
+  });
+});
