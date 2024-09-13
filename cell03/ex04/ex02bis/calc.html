@@ -17,7 +17,6 @@
             min-height: 100vh;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -36,61 +35,69 @@
         </form>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#calculatorForm').on('submit', function(event) {
-                event.preventDefault();
-                cal();
-            });
+        const cal = () => {
+            let leftOp = $.trim($("#leftValue").val());
+            let rightOp = $.trim($("#rightValue").val());
+            let op = $("#operators").val();
 
-            function cal() {
-                let leftOp = $.trim($('#leftValue').val());
-                let rightOp = $.trim($('#rightValue').val());
-                let op = $('#operators').val();
+            if (isNaN(leftOp) || isNaN(rightOp) || leftOp === '' || rightOp === '') {
+                alert("Error :(");
+                return;
+            }
 
-                if (isNaN(leftOp) || isNaN(rightOp) || leftOp === '' || rightOp === '') {
-                    alert("Error :(");
-                    return;
+            leftOp = parseFloat(leftOp);
+            rightOp = parseFloat(rightOp);
+
+            let result;
+
+            if ((leftOp >= 0) && (rightOp >= 0)) {
+                switch (op) {
+                    case "+":
+                        result = leftOp + rightOp;
+                        break;
+                    case "-":
+                        result = leftOp - rightOp;
+                        break;
+                    case "*":
+                        result = leftOp * rightOp;
+                        break;
+                    case "/":
+                        if (rightOp === 0) {
+                            alert("Error :(");
+                            return;
+                        } else {
+                            result = leftOp / rightOp;
+                        }
+                        break;
+                    case "%":
+                        if (rightOp === 0) {
+                            alert("Error :(");
+                            return;
+                        } else {
+                            result = leftOp % rightOp;
+                        }
+                        break;
                 }
 
-                leftOp = parseFloat(leftOp);
-                rightOp = parseFloat(rightOp);
-
-                let result;
-
-                if ((leftOp >= 0) && (rightOp >= 0)) {
-                    switch (op) {
-                        case "+":
-                            result = leftOp + rightOp;
-                            break;
-                        case "-":
-                            result = leftOp - rightOp;
-                            break;
-                        case "*":
-                            result = leftOp * rightOp;
-                            break;
-                        case "/":
-                            if (rightOp === 0) {
-                                result = "It’s over 9000!";
-                            } else {
-                                result = leftOp / rightOp;
-                            }
-                            break;
-                        case "%":
-                            if (rightOp === 0) {
-                                result = "It’s over 9000!";
-                            } else {
-                                result = leftOp % rightOp;
-                            }
-                            break;
-                    }
+                if (Number.isInteger(result)) {
                     alert(result);
                 } else {
                     alert("Error :(");
                 }
+            } else {
+                alert("Error :(");
             }
+        }
 
-            setInterval(function() {
+        $(document).ready(function () {
+            $("#calculatorForm").submit(function (event) {
+                event.preventDefault();
+                cal();
+            });
+
+            setInterval(function () {
                 alert("Please, use me...");
             }, 30000);
         });
