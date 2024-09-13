@@ -1,83 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Balloon</title>
-<style>
-body {
-	display: flex;
-	height: 100vh;
-	flex-direction: column-reverse;
-	justify-content: center;
-	background-color: rgb(238, 237, 235);
-}
-.balloon { 
-	width: 200px;
-	height: 200px;
-	margin: 0 auto 10px; 
-	border-radius:50%;
-	color: black; 
-} 
-.red {
-	background-color: red;
-}
-.green {
-	background-color: green;
-}
-.blue {
-	background-color: blue;
-}
-</style>
-<script>
-function changeColor(change) {
-    if(change.classList.contains("red")) {
-        change.classList.remove("red");
-		change.classList.add("green");
-    } else if(change.classList.contains("green")) {
-        change.classList.remove("green");
-		change.classList.add("blue");
-    } else {
-		change.classList.remove("blue");
-		change.classList.add("red");
-	}
-}
+    <title>Balloon</title>
+    <style>
+        #balloon {
+            background-color: red;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-function handleClick(change) {
-	changeColor(change);
-	if (change.offsetWidth < 420) {
-		let newSize = change.offsetWidth + 10;
-		change.style.width = Math.min(newSize, 420) + "px"; 
-		change.style.height = Math.min(newSize, 420) + "px";
-	} else {
-		change.style.width = "200px";
-		change.style.height = "200px";
-	}
-}
-
-function onHover(change) {
-	invertColor(change);
-	change.style.width = Math.max(200, change.offsetWidth - 5) + "px";
-	change.style.height = Math.max(200, change.offsetHeight - 5) + "px";
-}
-
-function invertColor(change) {
-    if(change.classList.contains("green")) {
-        change.classList.remove("green");
-		change.classList.add("blue");
-    } else if(change.classList.contains("blue")) {
-        change.classList.remove("blue");
-		change.classList.add("red");
-    } else {
-		change.classList.remove("red");
-		change.classList.add("green");
-	}
-}
-</script>	
+        body {
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 </head>
+
 <body>
-	<div class="balloon red" onclick="handleClick(this);" onmouseleave="onHover(this)">
-	</div> 
+    <div id="balloon" onclick="blow_up()"></div>
 </body>
+
 </html>
+<script>
+    var my_color = ["red", "green", "blue"];
+    var colors_state = 0;
+    var balloon = document.getElementById('balloon');
+    var balloon_size = 200;
+    var max_size = 415; // The maximum size of the balloon
+
+    function blow_up() {
+        if (balloon_size < max_size) {
+            balloon_size += 10;
+            if (colors_state < 2) {
+                colors_state++;
+            } else {
+                colors_state = 0;
+            }
+        } else {
+            balloon_size = 200;
+            colors_state = 0;
+        }
+        balloon.style.backgroundColor = my_color[colors_state];
+        balloon.style.width = balloon_size + "px";
+        balloon.style.height = balloon_size + "px";
+    }
+
+    function deflate() {
+        if (balloon_size > 200) {
+            balloon_size -= 5;
+            if (colors_state > 0) {
+                colors_state--;
+            } else {
+                colors_state = 2;
+            }
+        }
+        balloon.style.backgroundColor = my_color[colors_state];
+        balloon.style.width = balloon_size + "px";
+        balloon.style.height = balloon_size + "px";
+    }
+
+    balloon.addEventListener('mouseout', deflate);
+</script>
