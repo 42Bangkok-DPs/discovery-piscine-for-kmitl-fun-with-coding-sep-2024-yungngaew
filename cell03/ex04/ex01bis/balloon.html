@@ -31,19 +31,20 @@
     var my_color = ["red", "green", "blue"];
     var colors_state = 0;
     var balloon_size = 200;
-    var max_size = 415; // The maximum size of the balloon
+    var max_size = 420;
 
     function blow_up() {
+        balloon_size += 10;
         if (balloon_size < max_size) {
-            balloon_size += 10;
-            if (colors_state < 2) {
-                colors_state++;
+            colors_state++;
+            if (colors_state <= 2) {
+                
             } else {
                 colors_state = 0;
             }
         } else {
             balloon_size = 200;
-            colors_state = 0;
+            colors_state++;
         }
 
         $("#balloon").css({
