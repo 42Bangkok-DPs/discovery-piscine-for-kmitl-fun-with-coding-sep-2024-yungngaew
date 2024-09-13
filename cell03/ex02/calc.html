@@ -42,7 +42,6 @@
         let rightOp = document.getElementById("rightValue").value.trim();
         let op = document.getElementById("operators").value;
 
-        // Validate if the input is a number or contains only digits and .
         if (isNaN(leftOp) || isNaN(rightOp) || leftOp === '' || rightOp === '') {
             alert("Error :(");
             return;
@@ -66,26 +65,32 @@
                     break;
                 case "/":
                     if (rightOp === 0) {
-                        result = leftOp / rightOp;
+                        alert("Error :(");
+                        return;
                     } else {
-                        result = "It’s over 9000!";
+                        result = leftOp / rightOp;
                     }
                     break;
                 case "%":
                     if (rightOp === 0) {
-                        result = leftOp % rightOp;
+                        alert("Error :(");
+                        return;
                     } else {
-                        result = "It’s over 9000!";
+                        result = leftOp % rightOp;
                     }
                     break;
             }
-            alert(result);
+            
+            if (Number.isInteger(result)) {
+                alert(result);
+            } else {
+                alert("Error :(");
+            }
         } else {
             alert("Error :(");
         }
     }
 
-    // Set an alert every 30 seconds
     setInterval(function () {
         alert("Please, use me...");
     }, 30000);
